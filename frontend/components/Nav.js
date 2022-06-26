@@ -5,7 +5,7 @@ import { NavStyle, NavItems } from '../styles/NavStyles'
 export default function Nav() {
   return (
     <NavStyle>
-      <Link href={'/'}>stl.</Link>
+      <Link href={'/'}>STLD.</Link>
       <NavItems>
         <div>
           <FiShoppingBag />
