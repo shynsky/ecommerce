@@ -41,13 +41,14 @@ export default function ProductDetails() {
         <p><strong>Description: </strong><br />{description}</p>
         <p><strong>Price: </strong><br />${price}</p>
         <Quantity>
-          <span>Quantity:</span>
+          <span
+          >Quantity:</span>
           <button><AiFillMinusCircle onClick={decreaseQty} /></button>
           <span>{qty}</span>
           <button><AiFillPlusCircle onClick={increaseQty} /></button>
         </Quantity>
         <BuyStyles onClick={() => onAdd(data.products.data[0].attributes, qty)}><button>Add to card</button></BuyStyles>
       </ProductInfo>
-    </DetailsStyle>
+    </DetailsStyle >
   )
 }
