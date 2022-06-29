@@ -21,7 +21,6 @@ export default function Nav() {
       <AnimatePresence>
         {showCart && <Cart />}
       </AnimatePresence>
-
     </NavStyle>
   )
 }

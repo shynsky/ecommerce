@@ -12,6 +12,7 @@ export const CartWrapper = styled(motion.div)`
   z-index: 100;
   display: flex;
   justify-content: flex-end;
+  cursor: default;
 `
 
 export const CartStyle = styled(motion.div)`

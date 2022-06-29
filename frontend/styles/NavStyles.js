@@ -20,6 +20,7 @@ export const NavItems = styled.div`
     display: flex;
     flex-direction: column; 
     align-items: center;
+    cursor: pointer;
   }
   h3 {
     font-size: 1rem;
