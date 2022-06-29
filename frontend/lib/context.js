@@ -1,13 +1,14 @@
 import React, { createContext, useContext, useState } from 'react'
 
-const ShopContext = createContext()
+const Context = createContext()
 
 export const StateContext = ({ children }) => {
+  // Application state
   const [showCart, setShowCart] = useState(false)
   const [cartItems, setCartItems] = useState([])
-
-  // Add our data for the state
   const [qty, setQty] = useState(1)
+  const [totalQuantities, setTotalQuantities] = useState(0)
+  const [totalPrice, setTotalPrice] = useState(0)
 
   // Increase product quantity
   const increaseQty = () => {
@@ -24,6 +25,10 @@ export const StateContext = ({ children }) => {
 
   // Add product to cart
   const onAdd = (product, quantity) => {
+    // Total price
+    setTotalPrice(prevTotal => prevTotal + product.price * quantity)
+    // Increase total quantity
+    setTotalQuantities(prevTotal => prevTotal + quantity)
     // Check if the product is already in the cart
     const exist = cartItems.find(item => item.slug === product.slug)
     if (exist) {
@@ -39,19 +44,41 @@ export const StateContext = ({ children }) => {
     }
   }
 
+  // Remove product
+  const onRemove = (product) => {
+    // Total price
+    setTotalPrice((prevTotal) => prevTotal - product.price)
+    // Decrease total quantity
+    setTotalQuantities((prevTotal) => prevTotal - 1)
+    // Check if the product is already in the card
+    const exist = cartItems.find((item) => item.slug === product.slug)
+    if (exist.quantity === 1) {
+      setCartItems(cartItems.filter(item => item.slug !== product.slug))
+    } else {
+      setCartItems(cartItems.map(item =>
+        item.slug === product.slug
+          ? { ...exist, quantity: exist.quantity - 1 }
+          : item))
+    }
+  }
+
   return (
-    <ShopContext.Provider
+    <Context.Provider
       value={{
         qty,
         increaseQty,
         decreaseQty,
         showCart,
         setShowCart,
-        onAdd
+        onAdd,
+        onRemove,
+        cartItems,
+        totalQuantities,
+        totalPrice
       }}>
       {children}
-    </ShopContext.Provider>
+    </Context.Provider>
   )
 }
 
-export const useStateContext = () => useContext(ShopContext)
+export const useStateContext = () => useContext(Context)

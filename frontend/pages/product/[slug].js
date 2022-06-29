@@ -5,7 +5,8 @@ import {
   DetailsStyle,
   ProductInfo,
   Quantity,
-  Buy
+  BuyStyles,
+  ImageWrapper
 } from '../../styles/ProductDetails'
 import { AiFillPlusCircle, AiFillMinusCircle } from 'react-icons/ai'
 import { useStateContext } from '../../lib/context'
@@ -27,21 +28,25 @@ export default function ProductDetails() {
   if (fetching) return <p>Loading...</p>
   if (error) return <p>Oh no... {error.message}</p>
   // extract our data
-  const { title, description, image } = data.products.data[0].attributes
+  const { title, description, image, price } = data.products.data[0].attributes
 
   return (
     <DetailsStyle>
-      <img src={image.data.attributes.formats.medium.url} alt={title} />
+      <ImageWrapper>
+        <img src={image.data.attributes.formats.medium.url} alt={title} />
+      </ImageWrapper>
+
       <ProductInfo>
         <h3>{title}</h3>
-        <p>{description}</p>
+        <p><strong>Description: </strong><br />{description}</p>
+        <p><strong>Price: </strong><br />${price}</p>
         <Quantity>
           <span>Quantity:</span>
           <button><AiFillMinusCircle onClick={decreaseQty} /></button>
-          <p>{qty}</p>
+          <span>{qty}</span>
           <button><AiFillPlusCircle onClick={increaseQty} /></button>
         </Quantity>
-        <Buy onClick={() => onAdd(data.products.data[0].attributes, qty)}>add to card</Buy>
+        <BuyStyles onClick={() => onAdd(data.products.data[0].attributes, qty)}><button>Add to card</button></BuyStyles>
       </ProductInfo>
     </DetailsStyle>
   )
