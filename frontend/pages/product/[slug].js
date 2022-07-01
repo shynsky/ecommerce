@@ -11,10 +11,16 @@ import {
 import { AiFillPlusCircle, AiFillMinusCircle } from 'react-icons/ai'
 import { useStateContext } from '../../lib/context'
 import toast from 'react-hot-toast'
+import { useEffect } from 'react'
 
 export default function ProductDetails() {
   // Use state/context 
-  const { qty, increaseQty, decreaseQty, onAdd } = useStateContext()
+  const { qty, increaseQty, decreaseQty, onAdd, setQty } = useStateContext()
+
+  // Reset qty
+  useEffect(() => {
+    setQty
+  }, [])
 
   // Fetch slug
   const { query } = useRouter()
