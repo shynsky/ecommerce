@@ -1,13 +1,19 @@
 import Stripe from 'stripe'
 const stripe = new Stripe(`${process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY}`)
+import { getSession } from '@auth0/nextjs-auth0'
 
 export default async function handler(req, res) {
+  const session = getSession(req, res)
+  const user = session?.user
+  const stripeId = user['http://localhost:3000/stripe_customer_id']
+
   if (req.method === 'POST') {
     try {
       // Create a checkout session
       const session = await stripe.checkout.sessions.create({
         submit_type: 'pay',
         mode: 'payment',
+        customer: stripeId,
         payment_method_types: ['card'],
         shipping_address_collection: {
           allowed_countries: ['PL', 'US']
